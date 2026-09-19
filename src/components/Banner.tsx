@@ -8,12 +8,12 @@ const Banner = () => {
                     Build Your Ideal
                     <span className="bg-linear-to-r from-orange-500 via-pink-500 to-purple-600 bg-clip-text text-transparent"> Development Stack</span>
                 </h1>
-                <p className="mt-4 text-gray-600 sm:text-lg max-w-xl mx-auto md:mx-0">Discover, compare, and choose the best technologies to build your next-generation web applications with confidence.</p>
+                <p className="mt-4 text-gray-600 sm:text-lg max-w-xl mx-auto md:mx-0">Explore frontend, backend, database, and tooling options, compare them side by side, and put together the stack that fits your next project.</p>
                 <div className="mt-8 flex flex-wrap gap-4 justify-center md:justify-start">
-                    <a href="#technologies" className="btn bg-linear-to-r from-orange-500 via-pink-500 to-purple-600 text-white border-none rounded-full px-6 font-medium cursor-pointer hover:opacity-90 shadow-md">
+                    <a href="#technologies" className="px-6 py-3 bg-linear-to-r from-orange-500 via-pink-500 to-purple-600 text-white font-medium rounded-lg hover:opacity-95 transition shadow-sm">
                         Explore Technologies
                     </a>
-                    <button className="btn btn-outline border-gray-300 hover:border-gray-400 hover:bg-gray-100 text-gray-700 rounded-full px-6 font-medium cursor-pointer">
+                    <button className="px-6 py-3 bg-white border border-gray-200 text-gray-700 font-medium rounded-lg hover:bg-gray-50 transition shadow-sm cursor-pointer">
                         Learn More
                     </button>
                 </div>
