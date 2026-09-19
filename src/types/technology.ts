@@ -8,4 +8,5 @@ export interface ITechnology
     rating:number;
     difficulty:string;
     badge:string;
+    badgeColor?: string;
 }

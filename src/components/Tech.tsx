@@ -1,6 +1,16 @@
 import { useState,useEffect } from "react";
 import type { ITechnology } from "../types/technology";
 
+const badgeColorMap: Record<string, string> = {
+    blue: "bg-blue-50 text-blue-500 border-blue-200",
+    green: "bg-emerald-50 text-emerald-600 border-emerald-200",
+    orange: "bg-orange-50 text-orange-500 border-orange-200",
+    red: "bg-rose-50 text-rose-500 border-rose-200",
+    yellow: "bg-amber-50 text-amber-600 border-amber-200",
+    teal: "bg-teal-50 text-teal-600 border-teal-200",
+};
+
+
 const Tech = () =>
 {
     const [technologies, setTechnologies] = useState<ITechnology[]>([]);
@@ -40,12 +50,17 @@ const Tech = () =>
             <div className="flex flex-col lg:flex-row gap-6 items-start">
                 <div className="flex-1 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {technologies.map((tech) => (
-                        <div key={tech.id} className="bg-white border border-gray-100 rounded-2xl p-5 shadow-sm">
+                        <div key={tech.id} className="bg-white border border-gray-100 rounded-2xl p-5 shadow-sm flex flex-col justify-between">
                             <div className="flex justify-between items-center">
                                 <img src={tech.icon} alt={tech.name} className="w-10 h-10 object-contain" />
-                                <span className="text-xs px-2.5 py-1 rounded-full font-medium bg-blue-50 text-blue-500 border border-blue-100">
-                                    {tech.badge}
-                                </span>
+                                {tech.badge ? (
+                                    <span className={`text-xs px-2.5 py-1 rounded-full font-medium border ${badgeColorMap[tech.badgeColor || "blue"]}`}>
+                                        {tech.badge}
+                                    </span>
+                                ) : (
+                                    <div />
+                                )}
+
                             </div>
 
                             <h3 className="text-xl font-bold text-gray-900 mt-4">{tech.name}</h3>
@@ -61,6 +76,9 @@ const Tech = () =>
                                     ⭐ {tech.rating}
                                 </span>
                             </div>
+                            <button className="w-full mt-4 py-2.5 bg-gray-900 hover:bg-black text-white rounded-lg font-medium text-sm transition cursor-pointer">
+                                Add to Stack
+                            </button>
 
                         </div>
                     ))}
