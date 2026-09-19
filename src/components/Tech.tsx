@@ -92,9 +92,18 @@ const Tech = () =>
                                     ⭐ {tech.rating}
                                 </span>
                             </div>
-                            <button onClick={() => handleAddToStack(tech)} className="w-full mt-4 py-2.5 bg-gray-900 hover:bg-black text-white rounded-lg font-medium text-sm transition cursor-pointer">
-                                Add to Stack
+                            <button
+                                disabled={stack.some((item) => item.id === tech.id)}
+                                onClick={() => handleAddToStack(tech)}
+                                className={`w-full mt-4 py-2.5 rounded-lg font-medium text-sm transition ${
+                                    stack.some((item) => item.id === tech.id)
+                                        ? "bg-gray-100 text-gray-400 cursor-not-allowed border border-gray-200"
+                                        : "bg-gray-900 hover:bg-black text-white cursor-pointer"
+                                }`}
+                            >
+                                {stack.some((item) => item.id === tech.id) ? "Added to Stack" : "Add to Stack"}
                             </button>
+
                         </div>
                     ))}
                 </div>
