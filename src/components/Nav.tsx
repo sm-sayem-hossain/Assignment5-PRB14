@@ -5,7 +5,7 @@ import LOGO from "../assets/logo-text.png";
 const Nav = () => {
     const [isOpen, setIsOpen] = useState(false);
     return (
-        <nav className="bg-white sticky top-0 border-b z-50">
+        <nav className="bg-white sticky top-0 border-b border-gray-100 z-50">
             <div className="container mx-auto flex justify-between items-center p-4">
                 <div className="flex items-center gap-3">
                     <button onClick={() => setIsOpen(!isOpen)} className="md:hidden text-2x cursor-pointer">
