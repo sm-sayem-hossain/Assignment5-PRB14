@@ -1,5 +1,6 @@
 import { useState,useEffect } from "react";
 import type { ITechnology } from "../types/technology";
+import { toast } from "react-toastify";
 
 const badgeColorMap: Record<string, string> = {
     blue: "bg-blue-50 text-blue-500 border-blue-200",
@@ -34,21 +35,26 @@ const Tech = () =>
         });
     },[]);
     
-        const handleAddToStack = (tech: ITechnology) => {
+            const handleAddToStack = (tech: ITechnology) => {
         const isExist = stack.some((item) => item.id === tech.id);
         if (isExist) {
-            alert("This technology is already in your stack!");
+            toast.warning(`${tech.name} is already in your stack!`);
             return;
         }
         setStack([...stack, tech]);
+        toast.success(`${tech.name} added to your stack!`);
     };
 
-    const handleRemoveFromStack = (id: string) => {
+    const handleRemoveFromStack = (id: string, name: string) => {
         setStack(stack.filter((item) => item.id !== id));
+        toast.info(`${name} removed from stack!`);
     };
+
     const handleRemoveAll = () => {
         setStack([]);
+        toast.error("All technologies removed from stack!");
     };
+
 
     return (
         <section id="technologies" className="container mx-auto px-4 py-12">
@@ -63,6 +69,12 @@ const Tech = () =>
                     Pick one technology per category to build your ideal stack.
                 </p>
             </div>
+
+            {loading ? (
+                <div className="flex justify-center items-center py-20">
+                    <span className="loading loading-spinner loading-lg text-pink-500"></span>
+                </div>
+            ) : (
             <div className="flex flex-col lg:flex-row gap-6 items-start">
                 <div className="flex-1 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {technologies.map((tech) => (
@@ -93,7 +105,6 @@ const Tech = () =>
                                 </span>
                             </div>
                             <button
-                                disabled={stack.some((item) => item.id === tech.id)}
                                 onClick={() => handleAddToStack(tech)}
                                 className={`w-full mt-4 py-2.5 rounded-lg font-medium text-sm transition ${
                                     stack.some((item) => item.id === tech.id)
@@ -101,8 +112,9 @@ const Tech = () =>
                                         : "bg-gray-900 hover:bg-black text-white cursor-pointer"
                                 }`}
                             >
-                                {stack.some((item) => item.id === tech.id) ? "Added to Stack" : "Add to Stack"}
+                                {stack.some((item) => item.id === tech.id) ? "✓ Added to Stack" : "Add to Stack"}
                             </button>
+
 
                         </div>
                     ))}
@@ -128,7 +140,7 @@ const Tech = () =>
                                             <p className="text-xs text-gray-400">{item.category}</p>
                                         </div>
                                     </div>
-                                    <button onClick={() => handleRemoveFromStack(item.id)} className="text-gray-400 hover:text-gray-600 text-lg cursor-pointer">
+                                    <button onClick={() => handleRemoveFromStack(item.id, item.name)} className="text-gray-400 hover:text-gray-600 text-lg cursor-pointer">
                                         ✕
                                     </button>
                                 </div>
@@ -140,6 +152,7 @@ const Tech = () =>
                     )}
                 </div>
             </div>
+            )}
         </section>
     )
 }
