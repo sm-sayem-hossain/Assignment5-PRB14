@@ -15,6 +15,7 @@ const Tech = () =>
 {
     const [technologies, setTechnologies] = useState<ITechnology[]>([]);
     const [loading, setLoading] = useState<boolean>(true)
+    const [stack, setStack] = useState<ITechnology[]>([]);
 
     useEffect(()=>
     {
@@ -32,7 +33,22 @@ const Tech = () =>
             setLoading(false);
         });
     },[]);
-        
+    
+        const handleAddToStack = (tech: ITechnology) => {
+        const isExist = stack.some((item) => item.id === tech.id);
+        if (isExist) {
+            alert("This technology is already in your stack!");
+            return;
+        }
+        setStack([...stack, tech]);
+    };
+
+    const handleRemoveFromStack = (id: string) => {
+        setStack(stack.filter((item) => item.id !== id));
+    };
+    const handleRemoveAll = () => {
+        setStack([]);
+    };
 
     return (
         <section id="technologies" className="container mx-auto px-4 py-12">
@@ -76,16 +92,43 @@ const Tech = () =>
                                     ⭐ {tech.rating}
                                 </span>
                             </div>
-                            <button className="w-full mt-4 py-2.5 bg-gray-900 hover:bg-black text-white rounded-lg font-medium text-sm transition cursor-pointer">
+                            <button onClick={() => handleAddToStack(tech)} className="w-full mt-4 py-2.5 bg-gray-900 hover:bg-black text-white rounded-lg font-medium text-sm transition cursor-pointer">
                                 Add to Stack
                             </button>
-
                         </div>
                     ))}
                 </div>
 
-                <div className="w-full lg:w-72 bg-blue-100 p-4">
-                    {/* Your Stack bosamo ene */}
+                <div className="w-full lg:w-80 bg-white border border-gray-100 rounded-2xl p-6 shadow-xs">
+                    <h3 className="text-xl font-bold text-gray-900">Your Stack</h3>
+                    <p className="text-sm text-gray-400 mt-1">
+                        {stack.length === 0 ? "No technologies selected yet." : `${stack.length} Technology Selected`}
+                    </p>
+                    {stack.length === 0 ? (
+                        <div className="mt-6 py-8 border border-dashed border-gray-200 rounded-xl text-center text-gray-400 text-sm">
+                            Your stack is empty.
+                        </div>
+                    ):(
+                        <div className="mt-4 flex flex-col gap-3">
+                            {stack.map((item) => (
+                                <div key={item.id} className="border border-gray-200 rounded-xl p-3 flex items-center justify-between">
+                                    <div className="flex items-center gap-3">
+                                        <img src={item.icon} alt={item.name} className="w-8 h-8 object-contain" />
+                                        <div>
+                                            <h4 className="font-bold text-gray-900 text-sm">{item.name}</h4>
+                                            <p className="text-xs text-gray-400">{item.category}</p>
+                                        </div>
+                                    </div>
+                                    <button onClick={() => handleRemoveFromStack(item.id)} className="text-gray-400 hover:text-gray-600 text-lg cursor-pointer">
+                                        ✕
+                                    </button>
+                                </div>
+                            ))}
+                            <button onClick={handleRemoveAll} className="w-full mt-2 py-2.5 border border-red-300 text-red-500 hover:bg-red-50 font-medium rounded-xl text-sm transition cursor-pointer">
+                                Remove All
+                            </button>
+                        </div>
+                    )}
                 </div>
             </div>
         </section>
